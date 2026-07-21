@@ -6,7 +6,6 @@ const (
 	enumDescriptionsExtension = "x-enum-descriptions"
 )
 
-// EnumValue a model to record an enum consts variable
 type EnumValue struct {
 	key     string
 	Value   any
