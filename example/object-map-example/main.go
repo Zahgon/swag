@@ -9,16 +9,6 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-//	@title			Swagger Map Example API
-//	@version		1.0
-//	@termsOfService	http://swagger.io/terms/
-
-//	@license.name	Apache 2.0
-//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
-
-//	@host		localhost:8080
-//	@BasePath	/api/v1
-
 func main() {
 	r := gin.Default()
 

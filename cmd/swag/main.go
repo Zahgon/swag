@@ -1,11 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
 	"os"
-	"strings"
 
 	"github.com/urfave/cli/v2"
 
@@ -198,90 +195,7 @@ var initFlags = []cli.Flag{
 	},
 }
 
-func initAction(ctx *cli.Context) error {
-	strategy := ctx.String(propertyStrategyFlag)
-
-	switch strategy {
-	case swag.CamelCase, swag.SnakeCase, swag.PascalCase:
-	default:
-		return fmt.Errorf("not supported %s propertyStrategy", strategy)
-	}
-
-	leftDelim, rightDelim := "{{", "}}"
-
-	if ctx.IsSet(templateDelimsFlag) {
-		delims := strings.Split(ctx.String(templateDelimsFlag), ",")
-		if len(delims) != 2 {
-			return fmt.Errorf(
-				"exactly two template delimiters must be provided, comma separated",
-			)
-		} else if delims[0] == delims[1] {
-			return fmt.Errorf("template delimiters must be different")
-		}
-		leftDelim, rightDelim = strings.TrimSpace(
-			delims[0],
-		), strings.TrimSpace(
-			delims[1],
-		)
-	}
-
-	outputTypes := strings.Split(ctx.String(outputTypesFlag), ",")
-	if len(outputTypes) == 0 {
-		return fmt.Errorf("no output types specified")
-	}
-	logger := log.New(os.Stdout, "", log.LstdFlags)
-	if ctx.Bool(quietFlag) {
-		logger = log.New(io.Discard, "", log.LstdFlags)
-	}
-
-	collectionFormat := swag.TransToValidCollectionFormat(
-		ctx.String(collectionFormatFlag),
-	)
-	if collectionFormat == "" {
-		return fmt.Errorf(
-			"not supported %s collectionFormat",
-			ctx.String(collectionFormat),
-		)
-	}
-
-	var pdv = ctx.Int(parseDependencyLevelFlag)
-	if pdv == 0 {
-		if ctx.Bool(parseDependencyFlag) {
-			pdv = 1
-		}
-	}
-	return gen.New().Build(&gen.Config{
-		SearchDir:           ctx.String(searchDirFlag),
-		Excludes:            ctx.String(excludeFlag),
-		ParseExtension:      ctx.String(parseExtensionFlag),
-		MainAPIFile:         ctx.String(generalInfoFlag),
-		PropNamingStrategy:  strategy,
-		OutputDir:           ctx.String(outputFlag),
-		OutputTypes:         outputTypes,
-		ParseVendor:         ctx.Bool(parseVendorFlag),
-		ParseDependency:     pdv,
-		MarkdownFilesDir:    ctx.String(markdownFilesFlag),
-		ParseInternal:       ctx.Bool(parseInternalFlag),
-		UseStructNames:      ctx.Bool(useStructNameFlag),
-		GeneratedTime:       ctx.Bool(generatedTimeFlag),
-		RequiredByDefault:   ctx.Bool(requiredByDefaultFlag),
-		CodeExampleFilesDir: ctx.String(codeExampleFilesFlag),
-		ParseDepth:          ctx.Int(parseDepthFlag),
-		InstanceName:        ctx.String(instanceNameFlag),
-		OverridesFile:       ctx.String(overridesFileFlag),
-		ParseGoList:         ctx.Bool(parseGoListFlag),
-		Tags:                ctx.String(tagsFlag),
-		LeftTemplateDelim:   leftDelim,
-		RightTemplateDelim:  rightDelim,
-		PackageName:         ctx.String(packageName),
-		Debugger:            logger,
-		CollectionFormat:    collectionFormat,
-		PackagePrefix:       ctx.String(packagePrefixFlag),
-		State:               ctx.String(stateFlag),
-		ParseFuncBody:       ctx.Bool(parseFuncBodyFlag),
-		ParseGoPackages:     ctx.Bool(parseGoPackagesFlag),
-	})
-}
+func initAction(ctx *cli.Context) error { _ = "STUB: not implemented"; return nil }
 
 func main() {
 	app := cli.NewApp()

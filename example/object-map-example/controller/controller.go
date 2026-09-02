@@ -1,10 +1,6 @@
 package controller
 
-// Controller example
 type Controller struct {
 }
 
-// NewController example
-func NewController() *Controller {
-	return &Controller{}
-}
+func NewController() *Controller { _ = "STUB: not implemented"; return nil }
